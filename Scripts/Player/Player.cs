@@ -13,6 +13,7 @@ public class Player : MonoBehaviour, IDamagable
 
     private bool _resetJump = false;
     private bool _isGrounded = false;
+    private bool _isDead = false;
 
     [SerializeField]
     private float _speed = 5.0f;
@@ -35,8 +36,12 @@ public class Player : MonoBehaviour, IDamagable
 
     void Update()
     {
-        Movement();
-        if(Input.GetMouseButtonDown(0) && IsGrounded() == true)
+        if(_isDead == false)
+        {
+            Movement();
+        }
+        
+        if(Input.GetMouseButtonDown(0) && IsGrounded() == true && _isDead == false)
         {
             _playerAnim.Attack();
         }
@@ -129,6 +134,7 @@ public class Player : MonoBehaviour, IDamagable
         if(Health < 1)
         {
             _playerAnim.Death();
+            _isDead = true;
         }
     }
 
